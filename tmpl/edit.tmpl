@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>{{.Title}}</title>
+		<link rel="icon" type="image" href='{{.Icon}}'>
+		<link rel="stylesheet" href="../../style.css">
+	</head>
+	<body>
+        <div class="wrapper">
+            <header>URL lists</header>
+            <form method="POST" action="/durl/save">
+                <label for="URLlist">Choose a URL list:</label>
+                <select name="URLlist" id="URLlist">
+                    {{range .Data}}
+                    <option value="{{.}}">{{. | html}}</option>
+                    {{end}}
+                </select>
+                <label>New URL to add</label><input name="newURL" type="text" value="" />
+                <input type="submit" value="submit" />
+			</form>
+        </div>
+    </body>
+</html>

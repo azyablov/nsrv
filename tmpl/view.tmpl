@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>{{.Title}}</title>
+		<link rel="icon" type="image" href='{{.Icon}}'>
+		<link rel="stylesheet" href="../../style.css">
+	</head>
+	<body>
+        <div class="wrapper">
+            <header>URL lists</header>
+            <nav>
+                <p><a target='_blank' href="/durl/edit">Add new URL</a></p>
+            </nav>
+            <section>
+                {{range .Data}}
+                <p>{{.}}</p>
+                {{end}}
+            </section>
+        </div>
+    </body>
+</html>
