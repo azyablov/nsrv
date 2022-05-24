@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  nsrv:
+    image: nsrv:latest
+    build: 
+      context: .
+      labels:
+        maintainer: "Anton Zyablov"
+    container_name: nsrv-dyn-url
+    expose:
+      - "8088/tcp"
+    ports:
+      - "8088:8088/tcp"
+    restart: always
+    environment: 
+      CONFIG: /app/nsrv.json
+    volumes: 
+      - type: bind
+        source: /home/admin/docker/app/nsrv/dyn-url-filtering
+        target: /app/dyn-url-filtering
+      - type: bind
+        source: /home/admin/docker/app/nsrv/nsrv.json
+        target: /app/nsrv.json
