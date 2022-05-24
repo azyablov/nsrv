@@ -19,9 +19,25 @@ nav {
   float: left;
 }
 
+
+label {
+  float: left;
+  width: 10em;
+  margin-right: 1em;
+  margin-left: 1em;
+  text-align: left;
+}
+
+input,
+select {
+  display: block;
+  width: 10em;
+}
+
 section {
   width: 750px;
   float: right;
+  justify-content: start;
 }
 
 table {

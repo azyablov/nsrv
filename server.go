@@ -38,6 +38,7 @@ type AppParams struct {
 	Port       int    `json:"port,omitempty"`
 	Icon       string `json:"icon,omitempty"`
 	UrlListDir string `json:"urlListDir"`
+	Pass       string `json:"pass"`
 }
 
 type AppConfig struct {
@@ -167,7 +168,7 @@ func durlDeMUX() http.HandlerFunc {
 func editHandler(w http.ResponseWriter, r *http.Request) {
 	// Checking HTTP method
 	if r.Method != "GET" {
-		http.Error(w, "Method is not accepted.", http.StatusForbidden)
+		http.Error(w, "Method is not accepted.", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -199,14 +200,20 @@ func saveHanlder(w http.ResponseWriter, r *http.Request) {
 		uRLlist := r.FormValue("URLlist")
 		newURL := r.FormValue("newURL")
 
-		fmt.Fprintf(w, "Test: URLlist = %s\n", uRLlist)
-		fmt.Fprintf(w, "Test: newURL = %s\n", newURL)
+		// Simple check for passphrase
+		// TODO replace with some certificate / network authentication
+		if strings.TrimSpace(r.FormValue("pass")) != ac.Params.Pass {
+			http.Error(w, "Password is not correct.", http.StatusUnauthorized)
+			return
+		}
 
 		err := urllist.UpdateURLList(dynURLDir, uRLlist, newURL)
 		if err != nil {
 			fmt.Fprintf(w, "Can't update URL list %v w/ %v! %v", uRLlist, newURL, err)
 		} else {
-			fmt.Fprintf(w, "Modification request was successfully executed.")
+			fmt.Fprintf(w, "Modification request was successfully executed.\n")
+			fmt.Fprintf(w, "URL list = %s\n", uRLlist)
+			fmt.Fprintf(w, "New URL = %s\n", newURL)
 		}
 
 	} else {
@@ -217,7 +224,7 @@ func saveHanlder(w http.ResponseWriter, r *http.Request) {
 func viewHander(w http.ResponseWriter, r *http.Request, urlList string) {
 	// Checking HTTP method
 	if r.Method != "GET" {
-		http.Error(w, "Method is not accepted.", http.StatusForbidden)
+		http.Error(w, "Method is not accepted.", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -238,7 +245,7 @@ func viewHander(w http.ResponseWriter, r *http.Request, urlList string) {
 func rootHander(w http.ResponseWriter, r *http.Request) {
 	// Checking HTTP method
 	if r.Method != "GET" {
-		http.Error(w, "Method is not accepted.", http.StatusForbidden)
+		http.Error(w, "Method is not accepted.", http.StatusMethodNotAllowed)
 		return
 	}
 

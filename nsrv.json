@@ -2,6 +2,7 @@
     "params": {
         "port": 8088,
         "icon": "http://3.bp.blogspot.com/-seFSexG8lA0/TnGqSCbY4II/AAAAAAAABUY/uhxBi0U1-5A/s1600/favicon+%252814%2529.png",
-        "urlListDir": "./dyn-url-filtering"
+        "urlListDir": "./dyn-url-filtering",
+        "pass": "nsrv"
     }
 }
